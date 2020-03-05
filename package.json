@@ -8,7 +8,8 @@
   "author": "Valen Varangu-Booth",
   "node-red": {
     "nodes": {
-      "start-timer": "nodes/start-timer.js"
+      "start-timer": "nodes/start-timer.js",
+      "toggl-config": "nodes/toggl-config.js"
     }
   },
   "dependencies": {
