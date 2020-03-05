@@ -10,5 +10,8 @@
     "nodes": {
       "start-timer": "nodes/start-timer.js"
     }
+  },
+  "dependencies": {
+    "toggl-api": "^1.0.1"
   }
 }
