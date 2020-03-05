@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    RED.nodes.registerType('toggl-start-timer',{
+        category: 'Toggl',
+        color: '#E20A04',
+        defaults: {
+            name: {value:""}
+        },
+        credentials: {
+            token: {type:"text"}
+        },
+        icon: "font-awesome/fa-play",
+        inputs:1,
+        outputs:1, 
+        label: function() {
+            return this.name||"Start Toggl Timer";
+        },
+        paletteLabel: "Start Timer"
+    });
+</script>
+
+<script type="text/html" data-template-name="toggl-start-timer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-token"><i class="icon-tag"></i> API Token</label>
+        <input type="text" id="node-input-token" placeholder="token">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="toggl-start-timer">
+    <p>Starts a Toggl Timer</p>
+</script>
