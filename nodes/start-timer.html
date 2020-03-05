@@ -3,10 +3,8 @@
         category: 'Toggl',
         color: 'white',
         defaults: {
-            name: {value:""}
-        },
-        credentials: {
-            token: {type:"text"}
+            name: {value:""},
+            toggl: {value: "", type: "toggl-config"} 
         },
         icon: "font-awesome/fa-play",
         inputs:1,
@@ -24,8 +22,8 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-token"><i class="icon-tag"></i> API Token</label>
-        <input type="text" id="node-input-token" placeholder="token">
+        <label for="node-input-toggl"><i class="icon-tag"></i> Toggl</label>
+        <input type="text" id="node-input-toggl">
     </div>
 </script>
 
