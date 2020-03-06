@@ -138,5 +138,24 @@
 </script>
 
 <script type="text/html" data-help-name="toggl-start-timer">
-    <p>Starts a Toggl Timer</p>
+    <p>Starts a Toggl timer</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span> </dt>
+        <dd>The Toggl time entry description.</dd>
+        <dt class="optional">project <span class="property-type">string | int</span> </dt>
+        <dd>The Toggl project to assign the time entry to.</dd>
+        <dt class="optional">tags <span class="property-type">string | array</span> </dt>
+        <dd>Tags to add to the time entry.</dd>
+    </dl>
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>
+            Standard Output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>A timeEntry object representing the newly created time entry</dd>
+            </dl>
+        </li>
+    </ol>
 </script>
