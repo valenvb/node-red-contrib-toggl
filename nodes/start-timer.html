@@ -13,7 +13,93 @@
             return this.name||"Start Toggl Timer";
         },
         paletteLabel: "Start Timer"
+        paletteLabel: "Start Timer",
+        oneditprepare(){
+            let node = this
+            let config_id = -1
+            
+            function loadProjects(workspace_id){
+                if(workspace_id < 0) return;
+                console.log('loading projects')
+                const projectsURL = `/toggl/${config_id}/workspace/${workspace_id}/projects`
+    
+                $.ajax({
+                    url: projectsURL
+                }).done((data)=>{
+                    //console.log(data)
+                    for(let proj of data){
+                        let opt = new Option(proj.name, proj.id)
+                        $('#node-input-project').append(opt)
+                    }
+                    $('#node-input-project').val(node.project || -1)
+                }).fail(console.error)
+            }
+
+            function loadTags(workspace_id){
+                if(workspace_id < 0) return;
+                console.log('loading tags')
+                const projectsURL = `/toggl/${config_id}/workspace/${workspace_id}/tags`
+    
+                $.ajax({
+                    url: projectsURL
+                }).done((data)=>{
+                    //console.log(data)
+                    for(let tag of data){
+                        let opt = new Option(tag.name, tag.name)
+                        $('#node-input-tags').append(opt)
+                    }
+                    $('#node-input-tags').val(node.tags)
+                }).fail(console.error)
+            }
+
+            function loadWorkspaces(){
+                $.ajax({
+                    url: `/toggl/${config_id}/workspaces`
+                }).done((data)=>{
+                    //console.log(data)
+                    for(let ws of data){
+                        let opt = new Option(ws.name, ws.id)
+                        $('#node-input-workspace').append(opt)
+                    }
+                    if(data.length === 1){
+                        $('#node-input-workspace').val(node.workspace || data[0].id).change()
+                    } else {
+                        $('#node-input-workspace').val(node.workspace || -1).change()
+                    }
+                }).fail(console.error)
+            }
+            
+            $('#node-input-workspace').change(()=>{
+                let val = $('#node-input-workspace').val()
+                if(val && val >0 && val != this.workspace){ //saves unnecessary reloading
+                    loadProjects(val)
+                }
+            });
+
+            $('#node-input-toggl').change(()=>{
+                let val = $('#node-input-toggl').val()
+                if(val && val !== this.toggl && RED.nodes.node(val)){
+                    config_id = RED.nodes.node(val).id
+                    loadWorkspaces()
+                }
+            })
+
+            if(this.toggl){
+                config_id = RED.nodes.node(this.toggl).id
+
+                loadWorkspaces()
+
+                if(this.workspace){
+                    loadProjects(this.workspace)
+                    loadTags(this.workspace)
+                }
+    
+            }
+
+            
+        }
     });
+
 </script>
 
 <script type="text/html" data-template-name="toggl-start-timer">
