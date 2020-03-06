@@ -11,17 +11,18 @@ module.exports = function(RED) {
             pid: config.project,
             tags: config.tags,
         }
-        
+
         this.on('input', (msg, send)=>{
             
 
             this.toggl.startTimeEntry(data, (err, timeEntry)=>{
                 if(!err){
-                    msg.timeEntry = timeEntry
+                    msg.payload = timeEntry
                     send(msg)
                 }
                 if(err){
-                    msg.err = err;
+                    msg.error = true;
+                    msg.payload = err;
                     send(msg)
                 }
             })
