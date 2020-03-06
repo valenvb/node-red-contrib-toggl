@@ -14,7 +14,6 @@ module.exports = function(RED) {
 
         this.on('input', (msg, send)=>{
             
-
             this.toggl.startTimeEntry(data, (err, timeEntry)=>{
                 if(!err){
                     msg.payload = timeEntry
