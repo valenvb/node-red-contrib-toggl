@@ -144,9 +144,9 @@
         <dt>payload <span class="property-type">string</span> </dt>
         <dd>The Toggl time entry description.</dd>
         <dt class="optional">project <span class="property-type">string | int</span> </dt>
-        <dd>The Toggl project to assign the time entry to.</dd>
+        <dd>The Toggl project to assign the time entry to. Numbers are interpreted as the project ID in Toggl, strings must exactly match the Toggl project name.</dd>
         <dt class="optional">tags <span class="property-type">string | array</span> </dt>
-        <dd>Tags to add to the time entry.</dd>
+        <dd>Tags to add to the time entry. Either comma separated list or an array of string tags.</dd>
     </dl>
     <h3>Outputs</h3>
     <ol class="node-ports">
@@ -160,4 +160,9 @@
             </dl>
         </li>
     </ol>
+    <h3>Details</h3>
+    <p>
+        <code>msg.payload</code> and <code>msg.project</code> will overwrite the default configuration. By default, <code>msg.tags</code> will be <em>merged</em> with those specified here.
+    </p>
+
 </script>
