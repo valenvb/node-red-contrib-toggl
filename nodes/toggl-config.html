@@ -2,15 +2,14 @@
     RED.nodes.registerType('toggl-config',{
         category: 'config',
         defaults: {
-            name: {value:""},
-            //token: {value:""}
+            name: {value:"Default"}
         },
          credentials: {
             token: {type:"text"}
         },
         label: function() {
             return this.name||"Default Toggl";
-        }
+        },
 
     });
 </script>
