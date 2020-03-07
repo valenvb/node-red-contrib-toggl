@@ -8,7 +8,7 @@ module.exports = function(RED) {
             created_with: "Node-Red",
             description : config.description,
             wid : config.workspace,
-            pid: config.project,
+            pid: parseInt(config.project) > 0 ? config.project : null,
             tags: config.tags,
         }
         let statusTimeout;
