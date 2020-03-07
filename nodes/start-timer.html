@@ -5,7 +5,7 @@
         defaults: {
             name: {value:""},
             toggl: {value: "", required: true, type: "toggl-config"},
-            workspace: {value:-1, required: true, validate: x => parseInt(x) > 0 },
+            workspace: {value:null, required: true, validate: x => parseInt(x) > 0 },
             project: {value:""},
             description:{value:""},
             tags:{value:""},
