@@ -4,8 +4,8 @@
         color: '#FFAAAA',
         defaults: {
             name: {value:""},
-            toggl: {value: "", type: "toggl-config"},
-            workspace: {value:""},
+            toggl: {value: "", required: true, type: "toggl-config"},
+            workspace: {value:-1, required: true, validate: x => parseInt(x) > 0 },
             project: {value:""},
             description:{value:""},
             tags:{value:""},
