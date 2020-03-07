@@ -75,7 +75,7 @@
             
             $('#node-input-workspace').change(()=>{
                 let val = $('#node-input-workspace').val()
-                if(val && val >0 && val != this.workspace){ //saves unnecessary reloading
+                if(val && val >0){
                     loadProjects(val)
                     loadTags(val)
                 }
