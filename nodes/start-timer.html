@@ -30,7 +30,7 @@
                 $.ajax({
                     url: projectsURL
                 }).done((data)=>{
-                    //console.log(data)
+                    $('#node-input-project').empty().append(new Option("None", -1))
                     for(let proj of data){
                         let opt = new Option(proj.name, proj.id)
                         $('#node-input-project').append(opt)
@@ -47,7 +47,7 @@
                 $.ajax({
                     url: projectsURL
                 }).done((data)=>{
-                    //console.log(data)
+                    $('#node-input-tags').empty()
                     for(let tag of data){
                         let opt = new Option(tag.name, tag.name)
                         $('#node-input-tags').append(opt)
