@@ -24,6 +24,20 @@ module.exports = function(RED) {
                 data.description = msg.payload
             }
 
+            if(msg.tags){
+                let tags = []
+                if(typeof msg.tags === 'string'){
+                    tags = msg.tags.split(',').map(t=>t.trim())
+                }
+
+                if(config.overwriteTags){
+                    data.tags = tags
+                } else {
+                    data.tags = Array.from(new Set(data.tags.concat(tags)))
+                }
+
+            }
+
             let resolveProject = new Promise( (resolve, reject)=>{
                 if(msg.project){
                     if(typeof msg.project === "number"){
