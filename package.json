@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Node-Red nodes for Toggl",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha \"test/**/*.test.js\""
   },
   "author": "Valen Varangu-Booth",
   "node-red": {
@@ -14,5 +14,12 @@
   },
   "dependencies": {
     "toggl-api": "^1.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-things": "^0.2.0",
+    "mocha": "^7.1.0",
+    "node-red": "^1.0.4",
+    "node-red-node-test-helper": "^0.2.3"
   }
 }
