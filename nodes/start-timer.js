@@ -18,6 +18,8 @@ module.exports = function(RED) {
                 clearTimeout(statusTimeout)
             }
             this.status({})
+
+
             if(msg.payload){
                 data.description = msg.payload
             }
