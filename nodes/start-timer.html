@@ -60,7 +60,7 @@
                 $.ajax({
                     url: `/toggl/${config_id}/workspaces`
                 }).done((data)=>{
-                    //console.log(data)
+                    $('#node-input-workspace').empty()
                     for(let ws of data){
                         let opt = new Option(ws.name, ws.id)
                         $('#node-input-workspace').append(opt)
