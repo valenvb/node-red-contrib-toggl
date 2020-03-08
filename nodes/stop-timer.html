@@ -1,0 +1,93 @@
+<script type="text/javascript">
+    RED.nodes.registerType('toggl-stop-timer',{
+        category: 'Toggl',
+        color: '#FFAAAA',
+        defaults: {
+            name: {value:""},
+            toggl: {value: "", required: true, type: "toggl-config"},
+            workspace: {value:null, required: true, validate: x => parseInt(x) > 0 },
+        },
+        icon: "font-awesome/fa-stop",
+        inputs:1,
+        outputs:1, 
+        label: function() {
+            return this.name||"stop toggl timer";
+        },
+        paletteLabel: "stop timer",
+        oneditprepare(){
+            let config_id;
+            function loadWorkspaces(){
+                $.ajax({
+                    url: `/toggl/${config_id}/workspaces`
+                }).done((data)=>{
+                    $('#node-input-workspace').empty()
+                    for(let ws of data){
+                        let opt = new Option(ws.name, ws.id)
+                        $('#node-input-workspace').append(opt)
+                    }
+                    if(data.length > 0){
+                        $('#node-input-workspace').val(node.workspace || data[0].id).chnage()
+                    } else {
+                        $('#node-input-workspace').val(node.workspace || -1).change()
+                    }
+                }).fail(console.error)
+            }
+
+            $('#node-input-toggl').change(()=>{
+                let val = $('#node-input-toggl').val()
+                if(val && val !== this.toggl && RED.nodes.node(val)){
+                    config_id = RED.nodes.node(val).id
+                    loadWorkspaces()
+                }
+            })
+
+            if(this.toggl){
+                config_id = RED.nodes.node(this.toggl).id
+                loadWorkspaces()   
+            }
+        }
+       
+    });
+
+</script>
+
+<script type="text/html" data-template-name="toggl-stop-timer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-toggl"><i class="icon-tag"></i>Toggl</label>
+        <input type="text" id="node-input-toggl">
+    </div>
+    <div class="form-row">
+        <label for="node-input-workspace"><i class="icon-tag"></i>Workspace</label>
+        <select type="text" id="node-input-workspace">
+            <option value='-1' default>Select Toggl config...<option>
+        </select>
+    </div>
+   
+</script>
+
+<script type="text/html" data-help-name="toggl-stop-timer">
+    <p>Stops the currently running Toggl timer</p>
+    <h3>Inputs</h3>
+    <p>None</p>
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>
+            Standard Output
+            <dl class="message-properties">
+                <dt>payload<span class="property-type">object</span></dt>
+                <dd>A timeEntry object representing the newly created time entry</dd>
+                <dt class="optional">error<span class="property-type">boolean</span></dt>
+                <dd>Indicates if an error occurred creating the time entry. If set and true, msg.payload contains the error message.</dd>
+            </dl>
+        </li>
+    </ol>
+    <h3>Details</h3>
+    <p>
+        Stops the currently active timer. Returns the timeEntry object representing the resulting Toggl time entry.
+    </p>
+
+</script>

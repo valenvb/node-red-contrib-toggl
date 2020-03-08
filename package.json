@@ -9,6 +9,7 @@
   "node-red": {
     "nodes": {
       "start-timer": "nodes/start-timer.js",
+      "stop-timer": "nodes/stop-timer.js",
       "toggl-config": "nodes/toggl-config.js"
     }
   },
