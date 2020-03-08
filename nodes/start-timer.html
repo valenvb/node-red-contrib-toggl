@@ -65,7 +65,7 @@
                         let opt = new Option(ws.name, ws.id)
                         $('#node-input-workspace').append(opt)
                     }
-                    if(data.length === 1){
+                    if(data.length > 0){
                         $('#node-input-workspace').val(node.workspace || data[0].id).change()
                     } else {
                         $('#node-input-workspace').val(node.workspace || -1).change()
