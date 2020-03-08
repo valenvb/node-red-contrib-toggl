@@ -1,2 +1,4 @@
 node_modules
 /sp.js
+/.nyc_output
+/coverage
