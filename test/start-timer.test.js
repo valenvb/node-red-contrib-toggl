@@ -6,18 +6,9 @@ let MockToggl = require('toggl-api')
 helper.init()
 
 describe("start timer",()=>{
-    let MockToggl;
     const Projects = [{id:1,name:"project1"}, {id:2, name:"Project 2"}]
-    let started = sinon.stub()
     beforeEach((done)=>{
-        MockToggl = sinon.stub()
-
-        MockToggl.prototype.startTimeEntry = function(...args){console.log(args);started()}
-        
-                //sinon.stub().callsArgWith(1,null, "fakeEntry")
-        MockToggl.prototype.getWorkspaceProjects = sinon.stub().callsArgWith(1, null, Projects)
-        configNode.__set__('TogglClient', MockToggl)
-
+        jest.clearAllMocks()
         helper.startServer(done)
     })
 
