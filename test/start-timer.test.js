@@ -1,17 +1,9 @@
-let chai = require('chai')
-chai.use(require('chai-things'))
-chai.use(require('sinon-chai'))
-let expect = chai.expect
-let sinon = require('sinon')
-
-
-const rewire = require('rewire')
-
 let helper = require("node-red-node-test-helper")
-let configNode = rewire("../nodes/toggl-config.js")
-let startTimerNode = rewire("../nodes/start-timer.js")
+let configNode = require("../nodes/toggl-config.js")
+let startTimerNode = require("../nodes/start-timer.js")
+let MockToggl = require('toggl-api')
 
-
+helper.init()
 
 describe("start timer",()=>{
     let MockToggl;
