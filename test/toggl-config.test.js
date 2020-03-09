@@ -40,6 +40,18 @@ describe("config node", ()=>{
         })
     })
 
+    it("should warn if there is no API token", done=>{
+        helper.load(configNode, flow, ()=>{
+            let node = helper.getNode('conf')
+            
+            expect(node).not.toHaveProperty('credentials.token')
+            node.warn.should.have.been.called()
+
+            done()
+        })
+
+    })
+
     // describe('node setup APIs', ()=>{
     
     // })
