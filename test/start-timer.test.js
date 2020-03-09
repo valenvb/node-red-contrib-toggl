@@ -100,5 +100,23 @@ describe("start timer",()=>{
 
     })
 
+    // it('should warn if Toggl is not configured' , (done)=>{
+    //     const flow = [{
+    //         id: "test",
+    //         type: "toggl-start-timer",
+    //         name: "",
+    //         workspace: "1",
+    //         description: "",
+    //         tags: "",
+    //         overwriteTags: false,
+    //         wires: [[]]
+    //     }]
+    //     helper.load(startTimerNode, flow, ()=>{
+    //         let startNode = helper.getNode('test')
+    //         startNode.warn.should.have.been.called()
+    //         done()
+    //     })
+    // })
+
 
 })
