@@ -34,11 +34,31 @@ describe("start timer",()=>{
     {id:'out', type:'helper'} ,
     {id: "conf", type: "toggl-config", name: "Default" }
     ]
+
+    it("should load", (done)=>{
+        
+        helper.load([startTimerNode,configNode], FLOW, {conf:{token:"123"}},()=>{
+            let startNode = helper.getNode('test')
             let outNode = helper.getNode('out')
+                       
+            expect(startNode).toBeTruthy()
+            expect(startNode).toHaveProperty('toggl')
+
             outNode.on('input', (msg)=>{
-                msg.should.have.property('payload', "fakeEntry")
-                expect(MockToggl.prototype.startTimeEntry).to.have.been.called//With(sinon.match(ExpectData))
-                // sinon.assert.calledWith(MockToggl.prototype.startTimeEntry, ExpectData)
+                //msg.should.have.property('payload', "fakeEntry")
+                //console.log(msg)
+                expect(msg).toHaveProperty('payload')
+                expect(MockToggl.startTimeEntry).toHaveBeenCalled()
+                let data = MockToggl.startTimeEntry.mock.calls[0][0] //data param
+
+                expect(data).toEqual({
+                    created_with: 'Node-Red',
+                    description: '',
+                    wid: '1',
+                    pid: null,
+                    tags: ''
+                })
+                
                 done()
             })
             
