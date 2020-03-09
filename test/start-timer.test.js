@@ -130,6 +130,26 @@ describe("start timer",()=>{
             startNode.receive({tags:TAGS})
             
         })
+    })
+
+    it("should merge in tags from msg.tags as an string", (done)=>{
+        let TAGS = "one, two";
+        helper.load([startTimerNode,configNode], FLOW, {conf:{token:"123"}},()=>{
+            let startNode = helper.getNode('test')
+            let outNode = helper.getNode('out')
+                       
+            outNode.on('input', ()=>{
+                
+                expect(MockToggl.startTimeEntry).toHaveBeenCalled()
+                let data = MockToggl.startTimeEntry.mock.calls[0][0] //data param
+                
+                expect(data).toHaveProperty('tags', ["one", "two"])           
+                
+                done()
+            })
+            
+            startNode.receive({tags:TAGS})
+        })
 
     })
 
