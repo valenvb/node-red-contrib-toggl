@@ -100,6 +100,39 @@ describe("start timer",()=>{
 
     })
 
+    it("should merge in tags from msg.tags as an array", (done)=>{
+        let TAGS = ["one", "two"];
+        helper.load([startTimerNode,configNode], FLOW, {conf:{token:"123"}},()=>{
+            let startNode = helper.getNode('test')
+            let outNode = helper.getNode('out')
+                       
+            expect(startNode).toBeTruthy()
+            // expect(startNode).toHaveProperty('toggl')
+
+            outNode.on('input', (msg)=>{
+                //msg.should.have.property('payload', "fakeEntry")
+                //console.log(msg)
+                expect(msg).toHaveProperty('payload')
+                expect(MockToggl.startTimeEntry).toHaveBeenCalled()
+                let data = MockToggl.startTimeEntry.mock.calls[0][0] //data param
+                console.log(data)
+                expect(data).toEqual({
+                    created_with: 'Node-Red',
+                    description: '',
+                    wid: '1',
+                    pid: null,
+                    tags: TAGS
+                })
+                
+                done()
+            })
+            
+            startNode.receive({tags:TAGS})
+            
+        })
+
+    })
+
     // it('should warn if Toggl is not configured' , (done)=>{
     //     const flow = [{
     //         id: "test",
