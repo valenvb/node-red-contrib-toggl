@@ -31,6 +31,8 @@ module.exports = function(RED) {
                 let tags = []
                 if(typeof msg.tags === 'string'){
                     tags = msg.tags.split(',').map(t=>t.trim())
+                } else {
+                    tags = msg.tags
                 }
 
                 if(config.overwriteTags){
