@@ -2,8 +2,11 @@
 module.exports = function(RED) {
     function TogglTimerStartNode(config) {
         RED.nodes.createNode(this,config);
+        if(! (config.hasOwnProperty('toggl') && config.toggl) ){
+            this.warn("Toggl not configured")
+        }
         this.toggl = RED.nodes.getNode(config.toggl).toggl
-            
+        
         let data = {
             created_with: "Node-Red",
             description : config.description,
