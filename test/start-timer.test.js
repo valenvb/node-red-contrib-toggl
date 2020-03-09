@@ -63,8 +63,41 @@ describe("start timer",()=>{
             })
             
             startNode.receive({})
-
+            
         })
+
+    })
+    it("should take a description via msg.payload", (done)=>{
+        const DESC = "description"        
+        helper.load([startTimerNode,configNode], FLOW, {conf:{token:"123"}},()=>{
+            let startNode = helper.getNode('test')
+            let outNode = helper.getNode('out')
+                       
+            expect(startNode).toBeTruthy()
+            expect(startNode).toHaveProperty('toggl')
+
+            outNode.on('input', (msg)=>{
+                //msg.should.have.property('payload', "fakeEntry")
+                //console.log(msg)
+                expect(msg).toHaveProperty('payload')
+                expect(MockToggl.startTimeEntry).toHaveBeenCalled()
+                let data = MockToggl.startTimeEntry.mock.calls[0][0] //data param
+
+                expect(data).toEqual({
+                    created_with: 'Node-Red',
+                    description: DESC,
+                    wid: '1',
+                    pid: null,
+                    tags: ''
+                })
+                
+                done()
+            })
+            
+            startNode.receive({payload:DESC})
+            
+        })
+
     })
 
 
