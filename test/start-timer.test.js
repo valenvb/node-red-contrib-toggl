@@ -125,6 +125,32 @@ describe("start timer",()=>{
 
     })
 
+    it("should override tags with msg.tags if configured to do so", (done)=>{
+        let TAGS = ["one", "two"];
+        let flow = FLOW
+        flow[0].overwriteTags = true
+        flow[0].tags = ["not", "here"]
+        helper.load([startTimerNode,configNode], flow, {conf:{token:"123"}},()=>{
+            let startNode = helper.getNode('test')
+            let outNode = helper.getNode('out')
+                       
+            outNode.on('input', ()=>{
+                expect(MockToggl.startTimeEntry).toHaveBeenCalled()
+                let data = MockToggl.startTimeEntry.mock.calls[0][0] //data param
+                
+                expect(data).toHaveProperty('tags', TAGS)           
+                
+                done()
+            })
+            
+            startNode.receive({tags:TAGS})
+            
+        })
+    })
+
+    
+
+
     // it('should warn if Toggl is not configured' , (done)=>{
     //     const flow = [{
     //         id: "test",
