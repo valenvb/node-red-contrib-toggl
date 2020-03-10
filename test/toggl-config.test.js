@@ -1,19 +1,12 @@
-let chai = require('chai')
-chai.use(require('chai-things'))
-let sinon = require('sinon')
-
-const rewire = require('rewire')
-
 let helper = require("node-red-node-test-helper")
-let configNode = rewire("../nodes/toggl-config.js")
+let configNode = require("../nodes/toggl-config.js")
+let MockToggl = require('toggl-api')
 
-let MockToggl;
+helper.init()
 
 describe("config node", ()=>{
     beforeEach((done)=>{
-        MockToggl = sinon.stub()
-        configNode.__set__('TogglClient', MockToggl)
-
+        jest.clearAllMocks()
         helper.startServer(done)
     })
 
@@ -25,10 +18,10 @@ describe("config node", ()=>{
     const flow = [ {id:"conf",type:"toggl-config", name: "Default"} ]
     
     it("can be created", (done)=>{
-        helper.load(configNode, flow, {conf:{token:"bob"}}, ()=>{
+        helper.load(configNode, flow, {conf:{token:""}}, ()=>{
             let node = helper.getNode('conf')
-            node.should.have.property('name', "Default")
-            sinon.assert.calledWithNew(MockToggl)
+            expect(node).toHaveProperty('name', "Default")
+            
             done()
         })
     })
@@ -38,10 +31,25 @@ describe("config node", ()=>{
         const TOKEN = "bob"
         helper.load(configNode, flow, {conf:{token:TOKEN}}, ()=>{
             let node = helper.getNode('conf')
-            node.should.have.property('credentials', {token:TOKEN})
-            sinon.assert.calledOnceWithExactly(MockToggl, {apiToken:TOKEN})
+            
+            expect(node).toHaveProperty('credentials.token', TOKEN)
+            expect(MockToggl).toHaveBeenCalledTimes(1)
+            expect(MockToggl).toHaveBeenCalledWith({apiToken:TOKEN})
+
             done()
         })
+    })
+
+    it("should warn if there is no API token", done=>{
+        helper.load(configNode, flow, ()=>{
+            let node = helper.getNode('conf')
+            
+            expect(node).not.toHaveProperty('credentials.token')
+            node.warn.should.have.been.called()
+
+            done()
+        })
+
     })
 
     // describe('node setup APIs', ()=>{
