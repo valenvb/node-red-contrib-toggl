@@ -17,10 +17,16 @@ module.exports = function(RED){
                     }
                 } else {
                     //no current time entry
-                    this.warn('no currently running time entry')
                     this.status({shape:'ring', style:'green', text:"no time entry"})
-                    if(done){
-                        done('no currently running time entry')
+                    if(config.noTimerSendFalse){
+                        msg.payload = false
+                        send(msg)
+                        if(done) done()
+                    } else {
+                        this.warn('no currently running time entry')
+                        if(done){
+                            done('no currently running time entry')
+                        }
                     }
                 }
                 

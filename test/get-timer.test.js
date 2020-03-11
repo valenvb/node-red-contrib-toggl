@@ -113,5 +113,28 @@ describe("get timer node", ()=>{
         })
 
     })
-    it.todo("should output false when configured to do so for no timer running")
+    it("should output false when configured to do so for no timer running", done=>{
+        MockToggl.getCurrentTimeEntry.mockImplementationOnce(cb=>{cb(null, null)})
+        let custom_flow = FLOW
+        custom_flow[0].noTimerSendFalse = true
+
+        helper.load(NODES, custom_flow, CREDS, ()=>{
+            let node = helper.getNode('test')
+            let out = helper.getNode('out')
+            
+            out.on('input', msg=>{
+                expect(MockToggl.getCurrentTimeEntry).toHaveBeenCalled()
+                expect(msg).toHaveProperty('payload', false)
+                done()
+                node.status.should.have.been.called()
+                let statusArg = node.status.args[0][0]
+                expect(statusArg).toMatchObject({shape:"ring", style:"green", text:expect.stringContaining("no time entry")})
+                done()
+            })
+
+            node.receive()
+            
+        })
+
+    })
 })
