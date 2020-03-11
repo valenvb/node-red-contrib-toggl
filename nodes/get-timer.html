@@ -1,0 +1,58 @@
+<script type="text/javascript">
+    RED.nodes.registerType('toggl-get-timer',{
+        category: 'Toggl',
+        color: '#FFAAAA',
+        defaults: {
+            name: {value:""},
+            toggl: {value: "", required: true, type: "toggl-config"},
+            noTimerSendFalse: {value:false},
+        },
+        icon: "font-awesome/fa-clock-o",
+        inputs:1,
+        outputs:1, 
+        label: function() {
+            return this.name||"get running timer";
+        },
+        paletteLabel: "get running timer",
+        
+    });
+
+</script>
+
+<script type="text/html" data-template-name="toggl-get-timer">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-toggl"><i class="icon-tag fa fa-power-off"></i>Toggl</label>
+        <input type="text" id="node-input-toggl">
+    </div>
+    <div class="form-row">
+        <label for="node-input-noTimerSendFalse"><i class="icon-tag"></i>Send <code>false</code> if no timer running</label>
+        <input type="checkbox" id="node-input-noTimerSendFalse">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="toggl-get-timer">
+    <p>Gets the currently running Toggl timer</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        none
+    </dl>
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>
+            Standard Output
+            <dl class="message-properties">
+                <dt>payload<span class="property-type">object|boolean</span></dt>
+                <dd>A timeEntry object representing the newly created time entry. If configured, will be <code>false</code> when no timer is running</dd>
+            </dl>
+        </li>
+    </ol>
+    <h3>Details</h3>
+    <p>
+        The resulting timeEntry object in <code>msg.payload</code> is documented here: <a href="https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#get-running-time-entry">https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#get-running-time-entry</a>
+    </p>
+
+</script>
