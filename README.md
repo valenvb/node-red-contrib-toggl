@@ -12,9 +12,13 @@ This node starts a new timer. It can set the workspace, description, project and
 
 Stops the currently running Toggl timer (if there is one). Resulting `msg.payload` contains an object representing the Toggl time entry as described in the Toggl API docs: [https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#stop-a-time-entry](https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#stop-a-time-entry)  
 
+### Get Current Timer
+
+Gets the currnetly running Toggl timer. Returns the timeEntry object (see above). By default, the flow does not continue if there is no timer running. The node can be configured to put `false` in `msg.payload` and continue the flow if desired.
+
 ## Planned nodes
 
-- Get Current Timer
+- ~~Get Current Timer~~
 - Update Timer
 - When Timer Stopped
 - When Timer Started
