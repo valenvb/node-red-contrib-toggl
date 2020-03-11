@@ -32,7 +32,8 @@
     "jest": "^25.1.0",
     "node-red": "^1.0.4",
     "node-red-node-test-helper": "^0.2.3",
-    "rewire": "^4.0.1"
+    "rewire": "^4.0.1",
+    "wait-for-expect": "^3.0.2"
   },
   "files": [
     "nodes/*"
