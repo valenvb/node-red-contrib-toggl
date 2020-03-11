@@ -5,7 +5,11 @@ module.exports = function(RED){
 
         this.on('input', (msg, send, done)=>{
             toggl.getCurrentTimeEntry((err, timeEntry)=>{
-                if(timeEntry){
+                if(err){
+                    this.error(err)
+                    this.status({shape:'dot',style:'red', text:err})
+                    if(done) done(err)
+                } else if(timeEntry){
                     msg.payload = timeEntry
                     send(msg)
                     if(done){
@@ -13,10 +17,10 @@ module.exports = function(RED){
                     }
                 } else {
                     //no current time entry
-                    this.warn('No running time entry')
-                    this.status({shape:'ring', style:'green', text:"No current time entry"})
+                    this.warn('no currently running time entry')
+                    this.status({shape:'ring', style:'green', text:"no time entry"})
                     if(done){
-                        done('no running time entry')
+                        done('no currently running time entry')
                     }
                 }
                 

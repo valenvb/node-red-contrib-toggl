@@ -79,11 +79,39 @@ describe("get timer node", ()=>{
             })
             expect(shouldNotCall).not.toHaveBeenCalled()
             node.status.should.have.been.called()
+            let statusArg = node.status.args[0][0]
+            expect(statusArg).toMatchObject({shape:"ring", style:"green", text:expect.stringContaining("no time entry")})
 
             done()
             
         })
     })
+    it("should set an error and error status if an error occurs", done=>{
+        MockToggl.getCurrentTimeEntry.mockImplementationOnce(cb=>{cb(Error("Unknown API error"), null)})
+        helper.load(NODES, FLOW, CREDS, async()=>{
+            let node = helper.getNode('test')
+            let out = helper.getNode('out')
 
+            let shouldNotCall = jest.fn()
+
+            out.on('input', shouldNotCall)
+            node.receive()
+
+            await waitForExpect(()=>{
+                expect(MockToggl.getCurrentTimeEntry).toHaveBeenCalled()
+            })
+            expect(shouldNotCall).not.toHaveBeenCalled()
+            
+            node.error.should.have.been.called()
+
+            node.status.should.have.been.called()
+            let statusArg = node.status.args[0][0]
+            expect(statusArg).toMatchObject({shape:"dot", style:"red", text:expect.anything()})
+
+            done()
+            
+        })
+
+    })
     it.todo("should output false when configured to do so for no timer running")
 })
