@@ -56,11 +56,54 @@ MockToggle.mockData = {
             "tags":[""],
             "at":"2013-03-12T14:32:43+00:00"
         }
-    ]
+    ],
+    workspaces: [
+        {
+            "id":3134975,
+            "name":"John's personal ws",
+            "premium":true,
+            "admin":true,
+            "default_hourly_rate":50,
+            "default_currency":"USD",
+            "only_admins_may_create_projects":false,
+            "only_admins_see_billable_rates":true,
+            "rounding":1,
+            "rounding_minutes":15,
+            "at":"2013-08-28T16:22:21+00:00",
+            "logo_url":"my_logo.png"
+        },{
+            "id":777,
+            "name":"My Company Inc",
+            "premium":true,
+            "admin":true,
+            "default_hourly_rate":40,
+            "default_currency":"EUR",
+            "only_admins_may_create_projects":false,
+            "only_admins_see_billable_rates":true,
+            "rounding":1,
+            "rounding_minutes":15,
+            "at":"2013-08-28T16:22:21+00:00"
+        }
+    ],
+    singleWorkspace: {
+        "id":3134975,
+		"name":"John's personal ws",
+		"premium":true,
+		"admin":true,
+		"default_hourly_rate":150,
+		"default_currency":"USD",
+		"only_admins_may_create_projects":false,
+		"only_admins_see_billable_rates":false,
+		"rounding":1,
+		"rounding_minutes":15,
+		"at":"2013-08-28T16:22:21+03:00",
+		"logo_url":"my_logo.png"
+    }
 }
-MockToggle.getWorkspaces = jest.fn(cb=>cb(null, {}))
+MockToggle.getWorkspaces = jest.fn(cb=>cb(null, MockToggle.mockData.workspaces))
 MockToggle.startTimeEntry = jest.fn((d, cb)=>cb(null, d))
 MockToggle.getCurrentTimeEntry = jest.fn(cb=>{cb(null,MockToggle.mockData.runningEntry)})
-MockToggle.getTimeEntries = jest.fn(start, end, cb=>{cb(null,MockToggle.mockData.entries)})
+MockToggle.getTimeEntries = jest.fn((start, end, cb)=>{cb(null,MockToggle.mockData.entries)})
+
 
 module.exports = MockToggle
