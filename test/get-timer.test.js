@@ -80,7 +80,7 @@ describe("get timer node", ()=>{
             expect(shouldNotCall).not.toHaveBeenCalled()
             node.status.should.have.been.called()
             let statusArg = node.status.args[0][0]
-            expect(statusArg).toMatchObject({shape:"ring", style:"green", text:expect.stringContaining("no time entry")})
+            expect(statusArg).toMatchObject({shape:"ring", fill:"green", text:expect.stringContaining("no time entry")})
 
             done()
             
@@ -106,7 +106,7 @@ describe("get timer node", ()=>{
 
             node.status.should.have.been.called()
             let statusArg = node.status.args[0][0]
-            expect(statusArg).toMatchObject({shape:"dot", style:"red", text:expect.anything()})
+            expect(statusArg).toMatchObject({shape:"dot", fill:"red", text:expect.anything()})
 
             done()
             
@@ -128,7 +128,7 @@ describe("get timer node", ()=>{
                 done()
                 node.status.should.have.been.called()
                 let statusArg = node.status.args[0][0]
-                expect(statusArg).toMatchObject({shape:"ring", style:"green", text:expect.stringContaining("no time entry")})
+                expect(statusArg).toMatchObject({shape:"ring", fill:"green", text:expect.stringContaining("no time entry")})
                 done()
             })
 

@@ -7,7 +7,7 @@ module.exports = function(RED){
             toggl.getCurrentTimeEntry((err, timeEntry)=>{
                 if(err){
                     this.error(err)
-                    this.status({shape:'dot',style:'red', text:err})
+                    this.status({shape:'dot', fill:'red', text:err})
                     if(done) done(err)
                 } else if(timeEntry){
                     msg.payload = timeEntry
@@ -17,7 +17,7 @@ module.exports = function(RED){
                     }
                 } else {
                     //no current time entry
-                    this.status({shape:'ring', style:'green', text:"no time entry"})
+                    this.status({shape:'ring', fill:'green', text:"no time entry"})
                     if(config.noTimerSendFalse){
                         msg.payload = false
                         send(msg)
