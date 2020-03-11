@@ -22,6 +22,7 @@
     "nodes": {
       "start-timer": "nodes/start-timer.js",
       "stop-timer": "nodes/stop-timer.js",
+      "get-timer": "nodes/get-timer.js",
       "toggl-config": "nodes/toggl-config.js"
     }
   },
