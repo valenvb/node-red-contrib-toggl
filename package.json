@@ -7,8 +7,8 @@
     "toggl",
     "toggl-api"
   ],
-  "homepage": "https://gtihub.com/valenvb/node-red-contrib-toggl",
-  "repository": "https://gtihub.com/valenvb/node-red-contrib-toggl",
+  "homepage": "https://github.com/valenvb/node-red-contrib-toggl",
+  "repository": "https://github.com/valenvb/node-red-contrib-toggl",
   "bugs": {
     "url": "https://github.com/valenvb/node-red-contrib-toggl/issues"
   },
